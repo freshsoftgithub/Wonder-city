@@ -1,21 +1,27 @@
-body.active-modal {
+body.active-log {
     overflow-y: hidden;
     
 }
 
+.btn-log:hover,
+.btn-log:focus{
+    box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
+    transform: translateY(-0.25em);
+}
+
 .btn-log {
-    padding: 20px 50px;
+    padding: 15px 30px;
     display: block;
     margin: 100px auto 0;
     font-size: 18px;
-    background-color: orange;
+    background-color: rgba(157, 142, 212, 0.959);
     color: #fff;
     font-weight: 500;
     border-radius: 10px;    
     border: none;
-    position: absolute;
-    right: 300px;
-    top: -50px;
+    position: relative;
+    left: 620px;
+    top: -230px;
 }
 
 .log, .log-overlay{
@@ -85,5 +91,11 @@ body.active-modal {
     border: none;
     color: #fff;
     border-radius: 10px;
-    background-color: orange;
+    background-color: rgba(43, 13, 151, 0.959);
+}
+
+.login:hover,
+.login:focus{
+    box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
+    transform: translateY(-0.25em);
 }

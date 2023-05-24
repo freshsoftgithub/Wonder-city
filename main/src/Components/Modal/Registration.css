@@ -2,19 +2,25 @@ body.active-modal {
     overflow-y: hidden;
 }
 
+.btn-modal:hover,
+.btn-modal:focus{
+    box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
+    transform: translateY(-0.25em);
+}
+
 .btn-modal {
-    padding: 20px 50px;
-    display: block;
+    padding: 15px 30px;
     margin: 100px auto 0;
     font-size: 18px;
-    background-color: orange;
+    background-color: rgba(157, 142, 212, 0.959);
     color: #fff;
     font-weight: 500;
     border-radius: 10px;    
     border: none;
-    position: absolute;
-    right: 10px;
-    top: -50px;
+    position:relative;
+    left: 1250px;
+    top: -20px;
+    
 }
 
 .modal, .overlay {
@@ -81,6 +87,76 @@ body.active-modal {
     border: none;
     color: #fff;
     border-radius: 10px;
-    background-color: orange;
+    background-color: rgba(157, 142, 212, 0.959);
 }
+
+.registration:hover,
+.registration:focus{
+    box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
+    transform: translateY(-0.25em);
+}
+
+body.active-confirm {
+    overflow-y: hidden;
+}
+
+.confirm, .overlay {
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;;
+}
+
+.confirm-content {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    line-height: 1.4;
+    background: #f1f1f1;
+    padding: 14px 28px;
+    border-radius: 3px;
+    max-width: 600px;
+    min-width: 300px;
+}
+
+.confirm-content input {
+    display: block;
+    margin: 25px auto 0px auto;
+    width: 330px;
+    padding: 17px 20px;
+    background-color: #e5e5e5;
+    border-radius: 10px;
+    border: none;
+    font-family: Montserrat;
+    font-weight: 500;
+    font-size: 18px;
+    color:#89909F;
+}
+
+.confirm-content h2 {
+    text-align: center;
+}
+
+.confirm-code {
+    cursor: pointer;
+    display: block;
+    width: 330px;
+    margin: 60px auto 0px  auto;
+    padding: 20px 0px;
+    font-family: Montserrat;
+    font-weight: 500;
+    font-size: 16px;
+    border: none;
+    color: #fff;
+    border-radius: 10px;
+    background-color: rgba(157, 142, 212, 0.959);
+}
+
+
+
+
 

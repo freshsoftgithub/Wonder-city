@@ -1,0 +1,31 @@
+.btn-exit {
+    padding: 15px 30px;
+    margin: 100px auto 0;
+    font-size: 18px;
+    background-color: rgba(157, 142, 212, 0.959);
+    color: #fff;
+    font-weight: 500;
+    border-radius: 10px;    
+    border: none;
+    position: relative;
+    left: 1320px;
+    top: -31px;
+}
+
+.btn-exit:hover,
+.btn-exit:focus{
+    box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
+    transform: translateY(-0.25em);
+}
+
+.user{
+    
+    
+    font-family: Montserrat;
+    font-weight: 500;
+    font-size: 18px;
+    position: absolute;
+    right: 70px;
+    top: 15px;
+    color:#89909F;
+}

@@ -1,0 +1,107 @@
+.btn-topup {
+    padding: 15px 30px;
+    display: block;
+    margin: 100px auto 0;
+    font-size: 18px;
+    background-color: rgba(157, 142, 212, 0.959);
+    color: #fff;
+    font-weight: 500;
+    border-radius: 10px;    
+    border: none;
+    position: relative;
+    left: 262px;
+    top: -483px;
+}
+
+.btn-topup:hover,
+.btn-topup:focus{
+    box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
+    transform: translateY(-0.25em);
+}
+
+.balance{
+    
+    
+    font-family: Montserrat;
+    font-weight: 500;
+    font-size: 18px;
+    position: absolute;
+    right: 70px;
+    top: 40px;
+    color:#89909F;
+}
+
+.pay, .pay-overlay{
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+}
+
+.pay-overlay{
+    display: block;
+    background: rgba(49,49,49,0.8);
+}
+
+.pay-content{
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    line-height: 1.4;
+    background: #f1f1f1;
+    padding: 14px 28px;
+    border-radius: 3px;
+    max-width: 600px;
+    min-width: 300px;
+}
+
+.close-pay{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 7px;
+    border: none;
+}
+
+.pay-content input{
+    display: block;
+    margin: 25px auto 0px auto;
+    width: 330px;
+    padding: 17px 20px;
+    background-color: #e5e5e5;
+    border-radius: 10px;
+    border: none;
+    font-family: Montserrat;
+    font-weight: 500;
+    font-size: 18px;
+    color:#89909F;
+}
+
+.pay-content h2{
+    text-align: center;
+}
+
+.payment{
+    cursor: pointer;
+    display: block;
+    width: 330px;
+    margin: 60px auto 0px  auto;
+    padding: 20px 0px;
+    font-family: Montserrat;
+    font-weight: 500;
+    font-size: 16px;
+    border: none;
+    color: #fff;
+    border-radius: 10px;
+    background-color: rgba(43, 13, 151, 0.959);
+}
+
+.payment:hover,
+.payment:focus{
+    box-shadow: 0 0.5em 0.5em -0.4em var(--hover);
+    transform: translateY(-0.25em);
+}

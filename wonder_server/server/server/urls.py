@@ -21,6 +21,13 @@ from backend_api.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('user/', UserInfoView.as_view()),
-    path('userLogin', UserLogin.as_view())
+    path('userRegistration', UserInfoView.as_view()),
+    path('confirm', Confirm.as_view()),
+    path('userLogin', UserLogin.as_view()),
+    path('userProfile', UserProfile.as_view()),
+    path('reserv', ReservRequset.as_view()),
+    path('TopUp', TopUp.as_view()),
+    path('saveCard', SaveCard.as_view()),
+    path('cardInfo', CardInfoSend.as_view()),
+    path('api/v3/payments', Notification.as_view())
 ]
