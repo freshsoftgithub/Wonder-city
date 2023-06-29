@@ -22,11 +22,6 @@ class ReservSerializer(serializers.ModelSerializer):
         fields = ('userID', 'email', 'name', 'phone', 'date', 'people', 'time', 'hours', 'price')
 
 
-class PaymentTopUp(serializers.ModelSerializer):
-    class Meta:
-        model = Card
-        fields = ('userID', 'cardID', 'balance')
-
 class CardInfo(serializers.ModelSerializer):
     class Meta:
         model = Card

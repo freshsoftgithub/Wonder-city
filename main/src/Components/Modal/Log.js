@@ -6,7 +6,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { User } from "./UserLog";
 import { useNavigate } from "react-router-dom";
 import { UserInfo } from "./Profile";
-import { State } from "../../App";
 import { GetBalance } from "./TopUp";
 
 
@@ -87,7 +86,6 @@ export default function Log() {
           setUserID(data[0].userID);
           toggleLog();
           toggleConfirm();
-          return;
         } else if(data === "Err"){
           toast.error("Неверный логин или пароль.",{
           position:"top-center"})
@@ -107,12 +105,6 @@ export default function Log() {
 
       const gotInfo = () => {
         name.then((userName) => {
-          let user = userName[0].name
-          let userEmail = userName[0].email
-          let userPhone = userName[0].phone
-          let id = userName[0].userID
-          let cardID = userName[0].cardID
-
           const formDataCard = new FormData();
 
           formDataCard.append(
@@ -128,21 +120,21 @@ export default function Log() {
           const formJson = Object.fromEntries(formDataCard.entries());
           console.log(formJson);
 
-          console.log(user, userEmail, userPhone, id);
-          if(cardID != '-'){
+          if(userName[0].cardID != '-'){
             let response = fetch('https://127.0.0.1:8443/cardInfo', {method: "post", body: formDataCard})
             .then(res => res.json())
             .then(data => {return data})
             response.then((data) =>{
-              State(true);
-              UserFromLog(user,userEmail,userPhone, id, cardID, data[0].balance);
+              UserFromLog(userName[0].name,userName[0].email,userName[0].phone, userName[0].userID, userName[0].cardID, data[0].balance);
             })
-            navigation("/user", {replace: true});
+            //window.location.reload();
+            navigation("/user", {replace: true});         
           }
           else{
-            State(true);
-            UserFromLog(user,userEmail,userPhone, id, cardID, -1);
+            UserFromLog(userName[0].name,userName[0].email,userName[0].phone, userName[0].userID, userName[0].cardID, -1);
+            //window.location.reload();
             navigation("/user", {replace: true});
+            
           }
           
         })
@@ -150,7 +142,7 @@ export default function Log() {
       
     }
 
-    function handleSubmitCode(e){
+   function handleSubmitCode(e){
     e.preventDefault()
 
     const form = e.target;
@@ -181,39 +173,7 @@ export default function Log() {
       }
     })
 
-    function handleSubmitCode(e){
-      e.preventDefault()
-  
-      const form = e.target;
-      const formData = new FormData(form);
-  
-      formData.append(
-        'userID',
-        userID
-      )
-  
-      formData.append(
-        'approveCode',
-        code
-      )
-  
-      const formJson = Object.fromEntries(formData.entries());
-      console.log(formJson);
-  
-      fetch('https://127.0.0.1:8443/confirm', {method: form.method, body: formData})
-      .then(res => res.json())
-      .then(data => {
-        if(data === 'Wrong code'){
-          toast.error("Неверный код",{
-            position:"top-center"
-          })
-        } else{
-          navigation("/user", {replace: true});
-        }
-      })
-  
-  
-    }
+
   }
 
 
@@ -222,8 +182,7 @@ export default function Log() {
         
         <button onClick={toggleLog} className="btn-log">
          Войти
-        </button>
-        
+        </button>  
         
         {log && (
             <div className="log">

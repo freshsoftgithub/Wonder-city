@@ -4,7 +4,6 @@ import { User } from "./UserLog";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { UserInfo } from "./Profile";
-import { State } from "../../App";
 import { GetBalance } from "./TopUp";
 
 
@@ -37,9 +36,9 @@ export default function Registration()  {
   }
 
   if(confirm){
-    document.body.classList.add('actove-confirm')
+    document.body.classList.add('active-confirm')
   } else {
-    document.body.classList.remove('actove-confirm')
+    document.body.classList.remove('active-confirm')
   }
   
   const [mail, setEmail] = useState(null);
@@ -58,10 +57,6 @@ export default function Registration()  {
   const changeHandlerName = (event) => {
     setName(event.target.value);
   };
-
-  const changeHandlerCode = (event) =>{
-    setCode(event.target.value);
-  }
 
 
 
@@ -109,9 +104,12 @@ export default function Registration()  {
         setUserID(data[0].userID)
         toggleModal();
         toggleConfirm();
-        
       }
     })
+  }
+
+  const changeHandlerCode = (event) =>{
+    setCode(event.target.value);
   }
 
   function handleSubmitCode(e){
@@ -140,7 +138,7 @@ export default function Registration()  {
         toast.error("Неверный код",{
           position:"top-center"
         })
-      } else{
+      } else if(data === 'Right code'){
         navigation("/user", {replace: true});
       }
     })

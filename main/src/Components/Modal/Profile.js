@@ -38,17 +38,11 @@ function InfoFromServer(gotEmail,gotName,gotPhone,gotId){
 }
 
 export function ButtonProfile(){
-    const [profile, setProfile] = useState(false);
     const navigation = useNavigate();
 
     const showProfile = () =>{
-        setProfile(!profile);
         navigation("/user/profile", {replace: true});
-    }
-    if(profile) {
-        document.body.classList.add('active-profile')
-    } else {
-        document.body.classList.remove('active-profile')
+       // window.location.reload();
     }
 
     return(
@@ -64,9 +58,27 @@ export default function Profile(){
     const [userPhone, setUserPhone] = useState(null);
     const [userId, setUserID] = useState(0);
     const [cardID, setCardID] = useState();
-    const navigation = useNavigate();
     const [show, setShow] = useState(true);
     const [cardShow, setCardShow] = useState(true);
+    const navigation = useNavigate();
+
+    useEffect(() => {
+        var userName = localStorage.getItem("userName");
+        setUser(userName);
+        localStorage.setItem("userName", userName );
+        var userEmail = localStorage.getItem("userEmail");
+        setMail(userEmail);
+        localStorage.setItem("userEmail", userEmail);
+        var userPhone = localStorage.getItem("userPhone");
+        setUserPhone(userPhone);
+        localStorage.setItem("userPhone", userPhone);
+        var userId = localStorage.getItem("userId");
+        setUserID(userId);
+        localStorage.setItem("userId", userId);
+        var cardID = localStorage.getItem("cardID");
+        setCardID(cardID);
+        localStorage.setItem("cardID", cardID);
+    }, [])
 
     const toggleCard = () =>{
         setCardShow(!cardShow);
@@ -97,24 +109,6 @@ export default function Profile(){
         setCardID(event.target.value);
         parametr = event.target.value;
     }
-
-    useEffect(() => {
-        var userName = localStorage.getItem("userName");
-        setUser(userName);
-        localStorage.setItem("userName", userName );
-        var userEmail = localStorage.getItem("userEmail");
-        setMail(userEmail);
-        localStorage.setItem("userEmail", userEmail);
-        var userPhone = localStorage.getItem("userPhone");
-        setUserPhone(userPhone);
-        localStorage.setItem("userPhone", userPhone);
-        var userId = localStorage.getItem("userId");
-        setUserID(userId);
-        localStorage.setItem("userId", userId);
-        var cardID = localStorage.getItem("cardID");
-        setCardID(cardID);
-        localStorage.setItem("cardID", cardID);
-    }, [])
 
     function handleSubmit(e){
        e.preventDefault();
@@ -191,14 +185,12 @@ export default function Profile(){
             if(data === "Err"){
                 toast.error("Неверный номер карты",{
                     position:"top-center"}) 
-                    //GetBalance(-1);
             } else if(data === "OK"){
                 toast.success("Карта отвязана.",{
                     position:"top-center"
                 })
                 CardInfo('-');
                 GetBalance(-1);
-                window.location.reload();
             } else if(data === "Already used"){
                 toast.warn("Карта уже используется другим человеком.",{
                     position:"top-center"
@@ -208,7 +200,6 @@ export default function Profile(){
                     position:"top-center"}) 
                     CardInfo(data[0].cardID);
                     GetBalance(data[0].balance);
-                    window.location.reload();
             }
         })
         toggleCard();
@@ -224,38 +215,32 @@ export default function Profile(){
             <form action=" " method="post" onSubmit={handleSubmit}>
                 <h2>Профиль</h2>
                 <p>Почта</p>
-                <input type="email" onChange={changeHandlerEmail} value={mail} readOnly={show} style={{outline: show ? "none" : ""} && {backgroundColor: show ? "#9e9d9dcc" : ""}}></input>
+                <input type="email" onChange={changeHandlerEmail} value={mail} readOnly="true" 
+                style={{outline: show ? "none" : ""} && {backgroundColor:"#9e9d9dcc"}}></input>
                 <p>Имя</p>
-                <input type="text" onChange={changeHandlerName} value={user} readOnly={show} style={{outline: show ? "none" : ""} && {backgroundColor: show ? "#9e9d9dcc" : ""}}></input>
+                <input type="text" onChange={changeHandlerName} value={user} readOnly={show} 
+                style={{outline: show ? "none" : ""} && {backgroundColor: show ? "#9e9d9dcc" : ""}}></input>
                 <p>Телефон</p>
-                <input type="tel" id="phone" name="phone" onChange={changeHandlerPhone} value={userPhone} pattern="[0-9]{11}" readOnly={show} style={{outline: show ? "none" : ""} && {backgroundColor: show ? "#9e9d9dcc" : ""}}></input>
+                <input type="tel" id="phone" name="phone" onChange={changeHandlerPhone} value={userPhone} pattern="[0-9]{11}"
+                 readOnly={show} style={{outline: show ? "none" : ""} && {backgroundColor: show ? "#9e9d9dcc" : ""}}></input>
                 <button className="apply" style={{visibility: show ? "hidden" : "visible"}} >Принять</button> 
             </form> 
             <button className="changeInfo" onClick={toggle} style={{visibility: show ? "visible" : "hidden"}}>Редактировать</button> 
             <form action="" method="post" onSubmit={handleSubmitCard}>
                 <h2>Игральная карта</h2>
                 <p>Номер игральной карты</p>
-                <input type="text" value={cardID} placeholder="-" onChange={changeHandlerCardID}  readOnly={cardShow} style={{outline: show ? "none" : ""} && {backgroundColor: cardShow ? "#9e9d9dcc" : ""}}></input>
+                <input type="text" value={cardID} placeholder="-" onChange={changeHandlerCardID}  
+                readOnly={cardShow} style={{outline: show ? "none" : ""} && {backgroundColor: cardShow ? "#9e9d9dcc" : ""}}></input>
                 <button className="apply-card" style={{visibility: cardShow ? "hidden" : "visible"}} >Принять</button> 
             </form>
-            <button className="changeCard" onClick={toggleCard} style={{visibility: cardShow ? "visible" : "hidden"}}>Редактировать</button>
+            <button className="changeCard" onClick={toggleCard} 
+            style={{visibility: cardShow ? "visible" : "hidden"}}>Редактировать</button>
             <button className="close-profile" onClick={close_profile}>&#8592;
             </button>
         </div>
         <ToastContainer 
             position="top-center"/>
     </div>
-    
-    
-    
-    
-    
-    </>
-
-        
-        
-    
+    </>  
     );
-
-
 };

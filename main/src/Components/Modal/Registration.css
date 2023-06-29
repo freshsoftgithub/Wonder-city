@@ -156,7 +156,20 @@ body.active-confirm {
     background-color: rgba(157, 142, 212, 0.959);
 }
 
+.log, .log-overlay{
+    
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+}
 
-
+.log-overlay {
+    display: block;
+    background: rgba(49,49,49,0.8);
+}
 
 

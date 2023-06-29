@@ -30,7 +30,6 @@ ALLOWED_HOSTS = [
     '127.0.0.1'
 ]
 
-CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
 CSRF_COOKIE_SECURE = True
 
 
@@ -120,7 +119,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Reserv.css";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import { Notification } from "./UserLog";
 
 export function ReservForm(){
     const [user,setUser] = useState(null);
@@ -9,7 +10,7 @@ export function ReservForm(){
     const [id, setId] = useState(null);
     const [phone, setPhone] = useState(null);
     const [count, setCount] = useState(5);
-    const [date, setDate] = useState();
+    const [date, setDate] = useState(null);
     const [price, setPrice] = useState(1500);
     const [time, setTime] = useState("10:00");
     const [hours, setHours] = useState(1);
@@ -87,6 +88,13 @@ export function ReservForm(){
 
     function handleSubmit(e){
         e.preventDefault();
+        
+        if(date === null || phone === null){
+            toast.error("Форма заполнена неккоректно.", {
+                position:"top-center"
+            })
+            return 0;
+        }
 
         const form = e.target;
         const formData = new FormData(form);
@@ -142,9 +150,10 @@ export function ReservForm(){
        var response = fetch('https://127.0.0.1:8443/reserv', { method: form.method, body: formData})
        .then(res => res.json())
        .then(data => {
-           toast.success("Заявка создана, ожидайте звонка администратора.",{
-            position:"top-center"})
+            navigation("/user", {replace: true});
+            Notification();
         })
+
   
     }
 
@@ -224,22 +233,12 @@ export function ReservForm(){
 
 
 export default function Reserv(){
-    const [reserv, setReserv] = useState(false);
     const navigation = useNavigate();
 
     const toggleReserv = () => {
-        setReserv(!reserv);
         navigation("/user/reserv", {replace: true});
         window.location.reload();
     };
-
-    if(reserv) {
-        document.body.classList.add('active-reserv')
-    } else {
-        document.body.classList.remove('active-reserv')
-    }
-
-
 
     return(
         <>

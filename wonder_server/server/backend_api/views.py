@@ -28,10 +28,14 @@ import uuid
 from .token import account_activation_token
 
 
+Configuration.account_id = "321212"
+Configuration.secret_key = "test_P50Lv7iDg0_sy-fDomTkX7DTVpxm-EWCG-bSNkNS2Fk"
+
+
 class UserInfoView(APIView):
+
     def post(self, request):
         seriarlizer = UserSerializer(data=request.data)
-        print("Yes")
         if(User.objects.filter(email=request.data.get('email')).exists()):
             user = User.objects.get(email=request.data.get('email'))
             if(user.approve == False):
@@ -87,13 +91,15 @@ class UserInfoView(APIView):
         ]
         return Response(output)
 
-class Confirm(APIView):
+
+class ConfirmCode(APIView):
 
     def post(self,request):
         serializer = ConfirmEmail(data=request.data)
         if(serializer.is_valid(raise_exception=True)):
             user = User.objects.get(userID=request.data.get('userID'))
             if(user.approveCode == request.data.get('approveCode')):
+                user.approveCode = "Confirmed"
                 user.approve = True
                 user.save()
                 return Response('Right code')
@@ -117,9 +123,6 @@ class UserLogin(APIView):
             gettedPassword = request.data.get('password')
             if (User.objects.filter(email=gettedEmail, password=gettedPassword).exists()):
                 user = User.objects.get(email=gettedEmail)
-                print("Yes")
-                user = User.objects.get(email=gettedEmail)
-                snd_name = user.name
                 output = [{
                     "userID": user.userID,
                     "email": user.email,
@@ -128,7 +131,6 @@ class UserLogin(APIView):
                     "cardID": user.cardID,
                     "approve": user.approve
                 }]
-                print(snd_name)
                 if(user.approve == False):
                     mail_subject = "Подтверждение аккаунта"
                     message = "Код подтвеждения: " + str(user.approveCode)
@@ -137,7 +139,6 @@ class UserLogin(APIView):
                     email.send()
                 return Response(output)
             else:
-                print("No")
                 return Response("Err")
 
     def get(self, request):
@@ -155,15 +156,14 @@ class UserLogin(APIView):
         return Response(output)
 
 class UserProfile(APIView):
+
     def post(self, request):
         serializer = UserProfileChange(data=request.data)
         if (serializer.is_valid(raise_exception=True)):
             user = User.objects.get(userID=request.data.get('userID'))
-            user.email = request.data.get('email')
             user.name = request.data.get('name')
             user.phone = request.data.get('phone')
             user.save()
-
             output = [{
                 "userID": user.userID,
                 "email": user.email,
@@ -217,7 +217,6 @@ class SaveCard(APIView):
         if(serializer.is_valid(raise_exception=True)):
             if(Card.objects.filter(cardID = requset.data.get('cardID')).exists()):
                 card = Card.objects.get(cardID = requset.data.get('cardID'))
-                print(card.userID)
                 if(card.userID != user.userID and card.userID != None):
                     return Response("Already used")
                 card.userID = requset.data.get('userID')
@@ -274,10 +273,7 @@ class CardInfoSend(APIView):
         return Response(output)
 
 class TopUp(APIView):
-    Configuration.account_id = "321212"
-    Configuration.secret_key = "test_P50Lv7iDg0_sy-fDomTkX7DTVpxm-EWCG-bSNkNS2Fk"
 
-    @method_decorator(csrf_exempt)
     def post(self,request):
         serializer = TopUpBalance(data=request.data)
         if(serializer.is_valid(raise_exception=True)):
@@ -297,11 +293,12 @@ class TopUp(APIView):
                                    topUP=request.data.get('topUP'), approve=False, bonus=request.data.get('bonus'))
             topUp.save()
 
-            #card = Card.objects.get(userID=request.data.get('userID'))
-            #card.balance = card.balance + int(request.data.get('topUP')) + int(request.data.get('bonus'))
-            #card.save()
-            #topUp.approve = True
-            #topUp.save()
+            card = Card.objects.get(userID=request.data.get('userID'))
+            card.balance = card.balance + int(request.data.get('topUP')) + int(request.data.get('bonus'))
+            card.save()
+            topUp.approve = True
+            topUp.save()
+            print(payment.confirmation.confirmation_url)
             return HttpResponseRedirect(payment.confirmation.confirmation_url)
 
     def get(self,request):
@@ -318,11 +315,11 @@ class TopUp(APIView):
 
 
 class Notification(APIView):
+
     permission_classes = [AllowAny]
 
     def post(self,request):
-
-        payment_id = request.data.get('id')
+        payment_id = request.data['object']['id']
         Payment.capture(payment_id)
 
         topUp = PaymentBalance.objects.get(orderID=payment_id)

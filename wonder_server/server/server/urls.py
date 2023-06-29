@@ -18,16 +18,17 @@ from django.contrib import admin
 from django.urls import path, include
 from django.urls import re_path as url
 from backend_api.views import *
+from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('userRegistration', UserInfoView.as_view()),
-    path('confirm', Confirm.as_view()),
+    path('confirm', ConfirmCode.as_view()),
     path('userLogin', UserLogin.as_view()),
     path('userProfile', UserProfile.as_view()),
     path('reserv', ReservRequset.as_view()),
     path('TopUp', TopUp.as_view()),
     path('saveCard', SaveCard.as_view()),
     path('cardInfo', CardInfoSend.as_view()),
-    path('api/v3/payments', Notification.as_view())
+    path('api/v3/payments', csrf_exempt(Notification.as_view()))
 ]
